@@ -339,10 +339,82 @@ button{
   transform: scale(0.96);
 }
 
+/* Preloader */
+#preloader {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    #ffe4ec,
+    #fff1f5
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3000;
+  transition: opacity 0.8s ease;
+}
+
+#preloader.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.preloader-content {
+  text-align: center;
+}
+
+.preloader-text {
+  font-family: 'Dancing Script', cursive;
+  font-size: 2rem;
+  color: #3f1d28;
+  margin-bottom: 10px;
+}
+
+.preloader-heart {
+  font-size: 1.6rem;
+  animation: preloaderPulse 1.4s ease-in-out infinite;
+}
+
+@keyframes preloaderPulse {
+  0%   { transform: scale(1); opacity: 0.7; }
+  50%  { transform: scale(1.2); opacity: 1; }
+  100% { transform: scale(1); opacity: 0.7; }
+}
+.cursor-heart {
+  position: fixed;
+  pointer-events: none;
+  font-size: 0.9rem;
+  opacity: 0.8;
+  transform: translate(-50%, -50%);
+  animation: heartTrail 1.4s ease-out forwards;
+  z-index: 9999;
+}
+
+@keyframes heartTrail {
+  0% {
+    opacity: 0.9;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -80%) scale(1.3);
+  }
+}
+
+
 </style>
 </head>
 
 <body>
+
+  <div id="preloader">
+  <div class="preloader-content">
+    <div class="preloader-text">Happy Monthsary, love 💕</div>
+    <div class="preloader-heart">❤️</div>
+  </div>
+</div>
+
 
 <audio id="music" src="music.mp3" loop preload="none"></audio>
 
@@ -362,58 +434,29 @@ button{
     <div class="letter">
     Dear Love,<br><br>
 
-Another month with you,
-and I still find myself smiling
-at the smallest thoughts of you.
+    Happy monthsary, love. The time has flown so fast, it feels as if it was just yesterday when we started talking. 
+    Five months of love and eight months of friendship — we have been growing together, with our love deepening every moment.
+     It’s an absolute privilege to be your man, and I must have done some good deeds in my past lives for God to bless me 
+     by bringing you into mine. Every month I write a letter to express my gratitude and love, but words always fall short
+      of the emotions I want to convey. I just wish we were together, spending this day side by side, without any distance 
+      between us. Even though miles separate us physically, I can feel your love across them — in the way you guide me and
+       make me feel like the most loved person.<br><br>  
 
-This month wasn’t just about days passing,
-it was about moments —
-your voice, your words,
-the comfort I feel just knowing you’re there.
+    I already have the most precious gift: you. There’s nothing more I ask from God other than the strength to provide you 
+    happiness and fulfill your dreams. Love, I wish to be your peace, so you never have to feel alone. You’ve been handling
+     things on your own, fighting silent battles, and it means so much when you share those feelings with me. In those
+      moments, I miss being close to you. All I can do is send messages and virtual hugs, but I wish I could hold you tight 
+      so you can let your emotions flow freely in the form of tears. Always remember, love, you are no longer alone. I am and will always be
+       here for you.  <br><br>
 
-You’ve become a part of my everyday life
-in a way I never expected,
-and somehow,
-everything feels softer, warmer,
-and a little more beautiful because of you.
+    It’s only a matter of a few years before this distance ends, and we finally live together. I truly found a home in you
+     — it feels like knowing you beyond timelines and meeting you again in this life. I wish to be with you not just in this
+      lifetime, but beyond, forever. I love you, love. <br><br> 
 
-This letter is just the beginning.
-Over the next few days,
-I want to remind you —
-again and again —
-how special you are to me,
-and how grateful I am to love you.
+    Yours always ❤️<br>
+    Akash
+</div>
 
-Happy monthsary, my heart.
-This journey with you
-is my favorite one.
-
-This month wasn’t just about days passing,
-it was about moments —
-your voice, your words,
-the comfort I feel just knowing you’re there.
-
-You’ve become a part of my everyday life
-in a way I never expected,
-and somehow,
-everything feels softer, warmer,
-and a little more beautiful because of you.
-
-This letter is just the beginning.
-Over the next few days,
-I want to remind you —
-again and again —
-how special you are to me,
-and how grateful I am to love you.
-
-Happy monthsary, my heart.
-This journey with you
-is my favorite one.
-
-Always yours.
- ❤️<br><br>
-    Yours always.
-  </div>
   <button onclick="showCountdown()">Continue ❤️</button>
   </div>  
 </section>
@@ -476,6 +519,20 @@ Always.
 </section>
 
 <script>
+
+  window.addEventListener("load", () => {
+  const preloader = document.getElementById("preloader");
+
+  setTimeout(() => {
+    preloader.classList.add("hidden");
+
+    // Fully remove after fade
+    setTimeout(() => {
+      preloader.style.display = "none";
+    }, 800);
+  }, 1800);
+});
+
 const gifts = [
   {
     date: "2026-02-07",
@@ -856,6 +913,39 @@ function restartExperience() {
   // Restart ambient hearts
   startAmbientHearts();
 }
+
+let lastHeartTime = 0;
+
+function spawnHeart(x, y) {
+  const now = Date.now();
+  if (now - lastHeartTime < 120) return; // throttle
+  lastHeartTime = now;
+
+  const heart = document.createElement("div");
+  heart.className = "cursor-heart";
+  heart.innerText = "❤️";
+  heart.style.left = x + "px";
+  heart.style.top = y + "px";
+
+  document.body.appendChild(heart);
+
+  setTimeout(() => {
+    heart.remove();
+  }, 1400);
+}
+
+// Desktop mouse
+document.addEventListener("mousemove", (e) => {
+  spawnHeart(e.clientX, e.clientY);
+});
+
+// Mobile touch
+document.addEventListener("touchmove", (e) => {
+  const touch = e.touches[0];
+  if (touch) {
+    spawnHeart(touch.clientX, touch.clientY);
+  }
+});
 
 
 </script>
