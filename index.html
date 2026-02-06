@@ -766,7 +766,8 @@ function showCountdown(){
  gift.style.display='none';
  countdown.style.display='flex';
  cards.innerHTML='';
- const today=new Date().toISOString().split('T')[0];
+ const today = new Date().toLocaleDateString('en-CA');
+
  gifts.forEach(g=>{
   const d=document.createElement('div');
   d.className='card';
