@@ -6,6 +6,10 @@
 <title>My Forever ❤️</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;600&family=Playfair+Display:ital@0;1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Tangerine:wght@400;700&display=swap" rel="stylesheet">
+
+
 
 <style>
 :root{
@@ -84,6 +88,25 @@ body::before {
   animation:fadeUp 1.5s ease;
 }
 @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}}
+
+/* Romantic Gift Text Layout */
+#giftText {
+  max-width: 420px;        /* 👈 narrower = more vertical */
+  margin: 0 auto;
+  text-align: left;        /* 👈 IMPORTANT */
+  font-family: 'Playfair Display', serif;
+  color: #3f1d28;
+}
+
+#giftText p {
+  margin-bottom: 22px;
+  line-height: 1.85;       /* 👈 airy, emotional */
+  font-size: 1.05rem;
+}
+
+#giftText p:last-child {
+  font-style: italic;
+}
 
 
 /* Cards */
@@ -537,27 +560,35 @@ const gifts = [
   {
     date: "2026-02-07",
     icon: "🌹",
+    
     label: "Rose Day",
-    text: `If love had a color,
-it would bloom like this rose.
+    text: `Today is the start of Valentine's week, and love, I really wish I could be with you without any distance between us. 
+    Just like a rose stands out as the most loved among flowers, you are my favourite person with whom I wish to be forever. 
+    
+    
+   My life bloomed since you came and filled it with the colours of joy and fragrance of love, and made me feel like the most
+   loved person in the world. A rose with all its beauty has thorns in it, which depict our imperfections. I am so grateful that you chose me,
+  even though I have imperfections. I overthink and make mistakes that cause misunderstandings, but you always stayed and made me improve myself.
 
-Every time I think of you,
-something beautiful grows inside me.
-Soft, warm, and real —
-just like my love for you.`
+I pray our love keeps blooming and we keep achieving our dreams together and soon we get to live with each other. 
+
+I love you.
+`
   },
   {
     date: "2026-02-08",
     icon: "💍",
     label: "Propose Day",
-    text: `Today isn’t about big words,
-it’s about quiet promises.
+    text: `Love, today is about confessing feelings, though we do it every day without waiting for a special occasion. Still, I want to express my feelings once again.
 
-I promise to choose you
-even on days when life feels heavy,
-to stand with you,
-and to love you in all the small ways
-that truly matter.`
+You are the peace to my soul, my best friend, my princess, my future wife, my everything, and I wish to spend all my life with you. I want to marry you, fulfil all your dreams, stand by you on your tough days, be your comfort, and grow together.
+
+I hope that soon we get to live together and raise our family. It would truly be a privilege to be your husband and the biggest blessing from God. I am grateful that you find me worthy enough to be your man.
+
+This distance will pass, and we won’t have to wait to see each other. I miss you so much, love, and eagerly await the day we meet, spend time together, and finally get tied by the sacred thread, never having to live far from each other again.
+
+I love you.
+`
   },
   {
     date: "2026-02-09",
@@ -767,7 +798,12 @@ function openGift(g){
  }else{
   gift.style.display='flex';
   giftIcon.innerText=g.icon;
-  giftText.innerText=g.text;
+  giftText.innerHTML = g.text
+  .trim()
+  .split(/\n\s*\n/)   // 👈 THIS IS THE KEY FIX
+  .map(p => `<p>${p.trim()}</p>`)
+  .join("");
+
  }
 }
 
